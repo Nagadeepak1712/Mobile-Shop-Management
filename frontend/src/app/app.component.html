@@ -1,0 +1,92 @@
+<div class="website-wrapper">
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">Mobile Store</div>
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+      <button class="nav-btn" (click)="showAddForm = !showAddForm">
+        {{ showAddForm ? 'Close Admin' : 'Admin: Add Phone' }}
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Discover the future.</h1>
+      <p>Shop the latest and greatest smartphones directly from the source. Experience power like never before.</p>
+    </div>
+  </section>
+
+  <main class="main-container">
+    <!-- Admin Add Form Modal -->
+    <div class="add-form-overlay" *ngIf="showAddForm">
+      <div class="add-form">
+        <div class="form-header">
+          <h2>Add a New Device</h2>
+          <button class="close-btn" (click)="showAddForm = false">×</button>
+        </div>
+        <div class="form-group">
+          <label>Model Name</label>
+          <input type="text" [(ngModel)]="newMobile.name" placeholder="e.g. iPhone 15 Pro">
+        </div>
+        <div class="form-group">
+          <label>Brand</label>
+          <input type="text" [(ngModel)]="newMobile.brand" placeholder="e.g. Apple">
+        </div>
+        <div class="form-group">
+          <label>Price (Rs)</label>
+          <input type="number" [(ngModel)]="newMobile.price" placeholder="10000000">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea [(ngModel)]="newMobile.description" placeholder="A brief description..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Image URL (Optional)</label>
+          <input type="text" [(ngModel)]="newMobile.imageUrl" placeholder="https://example.com/image.jpg">
+        </div>
+        <button class="submit-btn" (click)="addMobile()">Save Device to Database</button>
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <section class="products-section">
+      <h2 class="section-title">Featured Devices</h2>
+      
+      <div class="mobile-grid">
+        <div class="mobile-card" *ngFor="let mobile of mobiles">
+          <div class="image-container">
+            <img [src]="mobile.imageUrl" alt="{{ mobile.name }}">
+          </div>
+          <div class="card-content">
+            <span class="brand-badge">{{ mobile.brand }}</span>
+            <h3>{{ mobile.name }}</h3>
+            <p class="description">{{ mobile.description }}</p>
+            <div class="card-footer">
+              <span class="price">₹{{ mobile.price }}</span>
+              <button class="buy-btn" (click)="buyMobile(mobile)">Buy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="mobiles.length === 0" class="empty-state">
+        <div class="empty-icon">🛍️</div>
+        <h3>No devices available</h3>
+        <p>There are currently no mobiles in the database. Use the Admin panel to add some!</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2026 MobiStore Inc. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
